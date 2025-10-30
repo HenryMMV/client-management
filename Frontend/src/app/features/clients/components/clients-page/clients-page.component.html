@@ -1,0 +1,42 @@
+<div class="mx-auto max-w-7xl p-4">
+  <h1 class="text-2xl font-semibold mb-4">Gestión de Clientes</h1>
+
+  <div class="mb-4 flex items-center gap-2">
+    <input
+      type="text"
+      [formControl]="searchControl"
+      placeholder="Buscar por RUC"
+      class="block w-64 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500" />
+    <button (click)="filterByRuc(searchControl.value)" class="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-white text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300">Buscar</button>
+    <button (click)="searchControl.setValue('')" class="inline-flex items-center rounded-lg bg-gray-200 px-3 py-2 text-gray-700 text-sm font-medium hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300">Limpiar</button>
+  </div>
+
+  <div *ngIf="loading" class="text-gray-500">Cargando...</div>
+  <div *ngIf="error" class="text-red-600">{{ error }}</div>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-600">
+      <thead class="text-xs uppercase bg-gray-100 text-gray-700">
+        <tr>
+          <th scope="col" class="px-4 py-3">RUC</th>
+          <th scope="col" class="px-4 py-3">Razón Social</th>
+          <th scope="col" class="px-4 py-3">Teléfono</th>
+          <th scope="col" class="px-4 py-3">Correo</th>
+          <th scope="col" class="px-4 py-3">Dirección</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of filtered" class="border-b hover:bg-gray-50">
+          <td class="px-4 py-3 font-medium text-gray-900">{{ c.ruc }}</td>
+          <td class="px-4 py-3">{{ c.razonSocial }}</td>
+          <td class="px-4 py-3">{{ c.telefonoContacto }}</td>
+          <td class="px-4 py-3">{{ c.correoContacto }}</td>
+          <td class="px-4 py-3">{{ c.direccion }}</td>
+        </tr>
+        <tr *ngIf="!loading && filtered.length === 0">
+          <td colspan="5" class="px-4 py-3 text-center text-gray-500">Sin resultados</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
